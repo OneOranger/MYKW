@@ -315,7 +315,7 @@ MYKW/
 ```env
 # OpenAI API 配置
 OPENAI_API_KEY=your_api_key_here
-OPENAI_API_BASE=https://api.gptsapi.net/v1
+OPENAI_API_BASE=openai地址
 OPENAI_MODEL=gpt-4
 
 # 服务配置
