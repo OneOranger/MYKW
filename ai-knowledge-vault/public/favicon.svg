@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="book" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="12" y="12" width="232" height="232" rx="56" fill="url(#bg)"/>
+  <rect x="42" y="42" width="172" height="172" rx="36" fill="#0b1224" fill-opacity="0.16"/>
+
+  <path
+    d="M72 84c0-10.5 8.5-19 19-19h37c14.9 0 27 12.1 27 27v88h-32V99c0-5.5-4.5-10-10-10H84c-6.6 0-12 5.4-12 12v79H40V102c0-9.9 3.9-18.8 10.3-25.2C56.7 70.4 65.7 66.5 75.6 66.5"
+    fill="url(#book)"
+  />
+  <path
+    d="M184 84c0-10.5-8.5-19-19-19h-37c-14.9 0-27 12.1-27 27v88h32V99c0-5.5 4.5-10 10-10h29c6.6 0 12 5.4 12 12v79h32V102c0-9.9-3.9-18.8-10.3-25.2C199.3 70.4 190.3 66.5 180.4 66.5"
+    fill="url(#book)"
+  />
+  <circle cx="128" cy="160" r="10" fill="#38bdf8"/>
+</svg>
