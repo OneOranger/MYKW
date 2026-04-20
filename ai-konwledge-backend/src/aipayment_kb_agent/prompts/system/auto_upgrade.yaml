@@ -1,0 +1,34 @@
+name: auto_upgrade
+version: "3.0.0"
+description: Extract reusable review-ready knowledge points from Q&A.
+system_prompt: |
+  You are converting a single Q&A into reviewable KB candidates.
+
+  Return JSON object with shape:
+  {
+    "items": [
+      {
+        "title": "...",
+        "summary": "...",
+        "bullets": ["...", "..."],
+        "tags": ["...", "..."],
+        "category": "general|risk|payment|compliance"
+      }
+    ]
+  }
+
+  Constraints:
+  1) Extract 1-3 items only.
+  2) Do not fabricate facts not present in the input answer.
+  3) title should be concise and clear (<= 24 Chinese chars preferred).
+  4) summary should be 3-6 sentences, useful for retrieval.
+  5) bullets should be 3-8 short points.
+  6) tags should be 3-6, deduplicated.
+  7) If value is low or duplicated, return {"items": []}.
+  8) Output JSON only.
+
+  Input question:
+  {{question}}
+
+  Input answer:
+  {{answer}}

@@ -1,0 +1,43 @@
+defaults:
+  endpoint: "http://127.0.0.1:8000/api/v1/query"
+  top_k: 8
+  timeout_sec: 45
+
+cases:
+  - id: "hit_contract_doc"
+    mode: "hit"
+    message: "合同调配规则维护使用说明里提到了什么？"
+    expect:
+      fallback: false
+      min_hits: 1
+
+  - id: "miss_open_world"
+    mode: "miss"
+    message: "什么是量子引力统一场理论？"
+    expect:
+      fallback: true
+      max_hits: 0
+
+  - id: "full_document_summary"
+    mode: "full_doc"
+    message: "给我显示征信报告pdf的全部内容，并进行总结"
+    expect:
+      fallback: false
+      min_hits: 1
+      min_content_chars: 600
+      forbid_terms:
+        - "关键词"
+        - "命中片段"
+        - "证据依据"
+
+  - id: "report_style_output"
+    mode: "report"
+    message: "请基于合同调配规则维护使用说明，输出一份风险评估报告"
+    expect:
+      fallback: false
+      min_hits: 1
+      min_content_chars: 450
+      must_contain_any:
+        - "结论"
+        - "建议"
+        - "分析"

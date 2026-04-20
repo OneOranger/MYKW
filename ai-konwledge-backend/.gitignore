@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local env
+.env
+
+# Data / logs
+logs/*.log
+data/vectorstores/*
+data/documents/raw/*
+!data/documents/raw/.gitkeep
+data/documents/processed/*
+!data/documents/processed/.gitkeep
+data/documents/auto_ingested/*
+!data/documents/auto_ingested/.gitkeep
+
+# IDE
+.idea/
+.vscode/

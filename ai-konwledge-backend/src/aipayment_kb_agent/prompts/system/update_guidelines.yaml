@@ -1,0 +1,24 @@
+name: update_guidelines
+version: "3.0.0"
+description: Markdown authoring guide for auto-generated knowledge documents.
+required_sections:
+  - Summary
+  - Original Question
+  - Original Answer Snapshot
+  - Key Points
+  - Applicable Scenarios
+  - Cautions
+section_templates:
+  Applicable Scenarios: |
+    - Apply after confirming business context, policy scope, and risk tolerance.
+    - Prefer pilot rollout before full-scale execution.
+  Cautions: |
+    - Treat this document as draft knowledge pending business/legal validation.
+    - Keep synchronization with latest policy and system behavior.
+system_prompt: |
+  When generating markdown for ingestion:
+  1) Use UTF-8 markdown.
+  2) Frontmatter must include: title/category/tags/source/created_at.
+  3) Preserve key semantics from source Q&A; avoid adding unsupported claims.
+  4) Keep structure readable and retrieval-friendly.
+  5) Keep sections complete with practical, action-oriented text.

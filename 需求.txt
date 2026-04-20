@@ -1,0 +1,125 @@
+"E:\AIPG\my_kw\ai-knowledge-vault"这个文件内容是前端内容，我们主要目的是要做一个个人AI知识库，我要求的主要的功能是：
+1、可以进行自动升级，比如我跟AI聊天询问的知识点内容，可以主动选择整理出知识点文档存储到我的知识库中，知识库可做分类，这样能方便区分和整理
+2、支持上传知识库文件，包括文件夹、docs、ppt、txt、excel、pdf
+3、可支持多轮对话，就跟聊天一样，也可以问一下无关的内容。需要有短期+长期记忆处理机制
+4、当我去跟AI聊天的时候，如果问的问题知识库中没有，那么AI应该告诉我“当前知识库中没有相关知识内容，我结合当前互联网上内容给你如下回复 ......”,我需要AI能自己触发回答机制。回复的内容给我一个可以添加到自己知识库的操作，这样我就能不断的丰富自己的知识库了。
+5、要有Prompt Engineering 管理
+6、一定要记住虚拟环境我已经创建好了执行的是 python -m venv .venv。我们所有的内容都在虚拟环境中开发，终端如是cmd就执行.\.venv\Scripts\activate.bat，如果是powershell的时候需要先执行.\.venv\Scripts\Activate.ps1;conda deactivate，我们所有的依赖都安装再虚拟环境中。以后所有新增的依赖都要pip freeze > requirements.txt
+7、我们需要部署在本地，暂时不需要对接真实数据库。
+8、对接AI的key在这个文件中"E:\AIPG\my_kw\ai-konwledge-backend\.env"，我们用的是三方代理openai地址：https://api.gptsapi.net/v1
+9、为了能最快跑通，我建议先用一个本地 embedding 模型方案：sentence-transformers，这个模型我已经安装好了
+10、我们的前端部分功能已经做好了，相当于高保真的UI"E:\AIPG\my_kw\ai-knowledge-vault",你做的后端功能要完全适配前端的功能，要提供所有功能的接口，接口定义你要参考前端的开发的内容。前端依赖还没有安装，你要给我安装。
+11、你要有详细的日志信息，每个节点和每次调用都要有详细的日志记录和信息展示
+12、后端我有一个目录结构你来参考一下，api可以适当增加，其他功能也要适当增加。目录结构如下：
+ai-konwledge-backend/                  # 项目根目录
+├── .env.example
+├── .gitignore
+├── .pre-commit-config.yaml
+├── pyproject.toml
+├── uv.lock
+├── README.md
+├── LICENSE
+├── Makefile
+├── scripts/
+│   ├── build_kb.sh
+│   ├── migrate_vectorstore.sh
+│   ├── update_memory.sh
+│   └── auto_upgrade_trigger.sh      # 新增：手动/定时触发自动升级
+├── src/
+│   └── aipayment_kb_agent/
+│       ├── __init__.py
+│       ├── __version__.py
+│       │
+│       ├── config/                  # 配置（新增 auto_upgrade 设置）
+│       │   ├── __init__.py
+│       │   └── settings.py
+│       │
+│       ├── core/
+│       │   ├── __init__.py
+│       │   ├── agent.py             # 主Agent（集成 Mem0 + Auto Upgrade 钩子）
+│       │   ├── prompt.py
+│       │   └── state.py             # LangGraph 状态机（新增 upgrade_decision）
+│       │
+│       ├── memory/                  # 短期 + 长期记忆（2026 Mem0 专业方案）
+│       │   ├── __init__.py
+│       │   ├── manager.py
+│       │   ├── short_term.py
+│       │   ├── long_term.py
+│       │   ├── compressor.py
+│       │   └── retriever.py
+│       │
+│       ├── prompts/                 # Prompt Engineering 管理
+│       │   ├── __init__.py
+│       │   ├── loader.py
+│       │   ├── registry.py
+│       │   ├── system/
+│       │   │   ├── base.yaml                 # 零幻觉 + Auto Upgrade 指令
+│       │   │   ├── knowledge_retrieval.yaml
+│       │   │   ├── auto_upgrade.yaml         # 新增：知识提取专用 Prompt
+│       │   │   └── update_guidelines.yaml
+│       │   ├── user/
+│       │   ├── examples/
+│       │   ├── versions/
+│       │   └── tests/
+│       │
+│       ├── knowledge/               # RAG 知识库核心
+│       │   ├── __init__.py
+│       │   ├── loader.py
+│       │   ├── splitter.py
+│       │   ├── embeddings.py
+│       │   ├── vectorstore.py       # LanceDB（支持 metadata 分类过滤）
+│       │   ├── retriever.py
+│       │   ├── updater.py           # 手动更新
+│       │   └── auto_upgrader.py     # ← 新增：自动升级核心（本功能主模块）
+│       │
+│       ├── knowledge_ingestion/     # ← 新增：知识自动摄入管道（2026 标准）
+│       │   ├── __init__.py
+│       │   ├── extractor.py         # LLM 结构化提取知识点（Pydantic 输出）
+│       │   ├── classifier.py        # 智能分类（ 多标签）
+│       │   ├── deduplicator.py      # 查重 & 合并
+│       │   ├── document_generator.py # 生成标准化 Markdown 文档
+│       │   └── pipeline.py          # 完整 Auto Upgrade Pipeline
+│       │
+│       ├── api/
+│       │   ├── __init__.py
+│       │   ├── app.py
+│       │   ├── dependencies.py
+│       │   └── routers/
+│       │       ├── query.py         # 支持 ?auto_upgrade=true 参数
+│       │       ├── admin.py         # 知识库管理 + 自动入库审核
+│       │       └── upgrade.py       # 新增：/upgrade/review 接口
+│       │
+│       ├── models/
+│       │   ├── __init__.py
+│       │   ├── request.py
+│       │   └── response.py          # 新增 KnowledgePointExtract + UpgradeDecision
+│       │
+│       ├── tools/
+│       │   ├── __init__.py
+│       │   └── web_search_tool.py
+│       │
+│       └── utils/
+│           ├── __init__.py
+│           ├── logging.py
+│           └── helpers.py
+│
+├── tests/
+│   ├── unit/
+│   ├── integration/                 # 新增 auto_upgrade 测试
+│   └── conftest.py
+│
+├── data/
+│   ├── documents/
+│   │   ├── raw/
+│   │   ├── processed/
+│   │   └── auto_ingested/           # ← 新增：自动升级生成的文档
+│   └── vectorstores/                # LanceDB（metadata 含 domain、tags、source）
+│
+├── docs/
+│   ├── architecture.md              # 更新：新增 Auto Upgrade 流程图
+│   ├── knowledge_domains.md         # 详细定义（分类依据）
+│   ├── api_spec.md
+│   └── deployment.md
+│
+├── logs/
+└── notebooks/

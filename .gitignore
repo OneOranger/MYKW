@@ -1,0 +1,63 @@
+# Environment
+.env
+.env.local
+.env.production
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+dist/
+dist-ssr/
+*.local
+
+# Data / logs (keep structure but ignore content)
+logs/*.log
+data/vectorstores/*
+!data/vectorstores/.gitkeep
+data/documents/raw/*
+!data/documents/raw/.gitkeep
+data/documents/processed/*
+!data/documents/processed/.gitkeep
+data/documents/auto_ingested/*
+!data/documents/auto_ingested/.gitkeep
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
