@@ -1,4 +1,4 @@
-# AI Knowledge Vault - 个人 AI 知识库系统
+# MYKW - 个人 AI 知识库系统
 
 <div align="center">
 
